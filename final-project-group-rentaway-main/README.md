@@ -1,4 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/0wrsx4Jb)
 # RentAway Website
 
 ## Description
@@ -105,16 +104,6 @@ Rentaway also offers a range of services and features to make the booking proces
 - able to provide feedback and ratings by guest
 - able to view reviews and ratings about a property
 - able to view and respond to guest feedback by host
-
-#
-## Assigning User Stories to Individual Team Members
-- **anchitha1309**: User Management and Review/Feedback Management (create account, update personal information, delete account, provide/respond to feedback and ratings, view property reviews and ratings)
-- **Giouardja**: Accommodation Management (create listing, update details, remove listing, search for properties)
-- **divyakasa09**: Booking Management (book accommodation, view booking history)
-- **ankithreddypati**: Payment Management (secure payment, receive payment, view payment history)
-#
-## [Domain Driven Design](https://drive.google.com/file/d/15EXHZMCKZG0UzALjpD7vdAGmpX_sZhNU/view?usp=sharing) 
-![Domain Driven Design](/RestAway.jpg)
 
 #
 
