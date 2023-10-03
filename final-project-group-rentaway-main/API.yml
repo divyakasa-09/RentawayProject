@@ -1,0 +1,555 @@
+openapi: 3.0.0
+info:
+  title: RestAway API
+  description: API for managing RestAway properties and bookings
+  version: 1.0.0
+
+servers:
+  - url: https://api.RestAway.com/v1
+
+paths:
+  /api/guests:
+    post:
+      summary: Create a new guest account
+      requestBody:
+        description: Guest information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Guest'
+      responses:
+        '201':
+          description: Successfully created guest account
+          $ref: '#/components/responses/Guest'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /api/hosts:
+    post:
+      summary: Create a new host account
+      requestBody:
+        description: Host information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Host'
+      responses:
+        '201':
+          description: Successfully created host account
+          $ref: '#/components/responses/Host'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /api/login:
+    post:
+      summary: Login as guest or host
+      requestBody:
+        description: Guest or host credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginCredentials'
+      responses:
+        '200':
+          description: Successfully logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/account:
+    get:
+      summary: Get guest or host account details
+      responses:
+        '200':
+          description: Successfully retrieved account details
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Guest'
+                  - $ref: '#/components/schemas/Host'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      parameters:
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - guest
+              - host
+
+    put:
+      summary: Update guest or host account
+      requestBody:
+        description: Guest or host information
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Guest'
+                - $ref: '#/components/schemas/Host'
+      responses:
+        '200':
+          description: Successfully updated account
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Guest'
+                  - $ref: '#/components/schemas/Host'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      summary: Delete guest or host account
+      responses:
+        '204':
+          description: Successfully deleted account
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  
+  /api/addproperty:
+    post:
+      summary: Adding New Property
+      description: Creates a new property.
+      requestBody:
+        description: The details of the property.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddProperty'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Propertystatus'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  
+  /api/getproperty:
+    get:
+      summary: Get properties
+      description: Retrieves all properties.
+      
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                
+                $ref: '#/components/schemas/Getproperty'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/bookings:
+    post:
+      summary: Create New Booking
+      description: Creates a new booking for a property.
+      requestBody:
+        description: The details of the booking.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddBooking'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddBooking'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /api/bookings/guest/{id}:
+    get:
+      summary: Get Guest Bookings
+      description: Retrieves all bookings made by a guest.
+      parameters:
+        - name: id
+          in: path
+          description: ID of the guest to retrieve bookings for.
+          required: true
+          schema:
+            type: integer
+            example: 5678
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                
+                $ref: '#/components/schemas/Property'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/bookings/host/{id}:
+    get:
+      summary: Get host bookings
+      description: Returns a list of bookings made by a host
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Host ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Booking'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/bookings/{id}:
+    delete:
+      summary: Cancel booking
+      description: Cancels a booking made by a guest
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Booking ID
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '404':
+          $ref: '#/components/responses/NotFound'
+          
+  /api/payments/guest/{id}:
+    get:
+      summary: Get guest payment history
+      description: Returns a list of payments made by a guest
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Guest ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Property'
+        '404':
+          $ref: '#/components/responses/NotFound'
+          
+  /api/payments/host/{id}:
+    get:
+      summary: Get host payment history
+      description: Returns a list of payments received by a host
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Host ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropertyList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+          
+  /api/reviews:
+    post:
+      summary: Create a new review
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Review"
+      responses:
+        '201':
+          description: Successfully created a new review
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetReview"
+        '400':
+          description: Bad request - missing required fields
+        '401':
+          description: Unauthorized - user not logged in
+        '500':
+          description: Internal server error
+
+  /api/reviews/property/{id}:
+    get:
+      summary: Get reviews for a specific property
+      parameters:
+        - name: id
+          in: path
+          description: ID of the property to retrieve reviews for
+          required: true
+          schema:
+            type: string
+          example: 123456
+      responses:
+        '200':
+          description: Successfully retrieved reviews for the property
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PropertyList"
+        '404':
+          description: Property not found
+        '500':
+          description: Internal server error
+
+  /api/reviews/guest/{id}:
+    get:
+      summary: Get reviews for a specific guest
+      parameters:
+        - name: id
+          in: path
+          description: ID of the guest to retrieve reviews for
+          required: true
+          schema:
+            type: string
+          example: 123456
+      responses:
+        '200':
+          description: Successfully retrieved reviews for the guest
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Review"
+        '404':
+          description: Guest not found
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    Guest:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - first_name
+        - last_name
+        - email
+        - password
+    Host:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone_number:
+          type: string
+      required:
+        - first_name
+        - last_name
+        - email
+        - password
+        - phone_number
+    LoginCredentials:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+    LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+      required:
+        - access_token
+        - token_type
+    Property:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        location:
+          type: string
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
+      required:
+        - title
+        - description
+        - price
+        - location
+        - start_date
+        - end_date
+    PropertyList:
+      type: object
+      properties:
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        total_count:
+          type: integer
+      required:
+        - properties
+        - total_count
+    Booking:
+      type: object
+      properties:
+        status:
+          type: string
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+    
+    Review:
+      type: object
+      properties:
+        msg:
+          type: string
+    
+    
+    AddProperty:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        location:
+          type: string
+      required:
+        - title
+        - description
+        - price
+    
+    Getproperty:
+      type: object
+      properties:
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddProperty'
+        total_count:
+          type: integer
+      required:
+        - properties
+        - total_count
+    
+    Propertystatus:
+      type: object
+      properties:
+        msg:
+          type: string
+    
+    GetReview:
+      type: object
+      properties:
+        msg:
+          type: string
+    
+    AddBooking:
+       type: object
+       properties:
+          name:
+            type: string
+          
+          location:
+            type: string
+          start_date:
+            type: string
+            format: date-time
+          end_date:
+            type: string
+            format: date-time
+
+       required:
+        - name
+        - location
+        - start_date
+        - end_date
+    
+      
+
+
+  responses:
+    Guest:
+      description: Guest Sucessfully Added
+    Host:
+      description: Host Sucessfully Added
+      
+    BadRequest:
+      description: Bad Request
+    Unauthorized:
+      description: Unauthorized
+    NotFound:
+      description: Not Found
+    
+    
+      

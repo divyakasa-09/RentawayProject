@@ -1,0 +1,115 @@
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    border: #333 1px solid;
+    width:450px;
+    height: 1100px;
+    position: relative;
+    left:37%;
+    border-radius: 20px;
+    transition: 0.5s;
+    }
+    
+    .signup-container:hover{
+        box-shadow:  0 0 20px 0px rgba(0, 0, 0, 0.3);
+    }
+    
+    .signup-heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    }
+    
+    .signup-error {
+    color: red;
+    margin-bottom: 10px;
+    text-align: center;
+    
+    a {
+    color: inherit;
+    text-decoration: underline;
+    }
+    }
+    
+    .signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    padding: 20px;
+  
+   
+    }
+    
+    .signup-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    width: 100%;
+    }
+    
+    .signup-input {
+    height: 40px;
+    padding: 0 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #333;
+    outline: none;
+    }
+    .password-error {
+        color: red;
+      }
+      
+      .password-valid {
+        color: green;
+      }
+    
+    .signup-input:focus {
+    border-bottom: 2px solid #0077c2;
+    }
+    
+    .signup-button {
+    background-color: #0077c2;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    }
+    
+    .signup-button:hover {
+    background-color: #005e9e;
+    }
+    
+    .signup-link {
+    font-size: 1.1rem;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    
+    a {
+    color: #1889d0;
+    text-decoration: none;
+    }
+    }
+    .signup-buttons-container{
+        display: flex;
+        flex-direction: row;
+       padding-right: 5px;
+       width: 90%;
+    }
+ .text1div{
+    font-size: small;
+    align-items: center;
+ }
