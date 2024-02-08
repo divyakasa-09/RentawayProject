@@ -107,14 +107,10 @@ Rentaway also offers a range of services and features to make the booking proces
 - able to view and respond to guest feedback by host
 
 #
-## Assigning User Stories to Individual Team Members
-- **anchitha1309**: User Management and Review/Feedback Management (create account, update personal information, delete account, provide/respond to feedback and ratings, view property reviews and ratings)
-- **Giouardja**: Accommodation Management (create listing, update details, remove listing, search for properties)
-- **divyakasa09**: Booking Management (book accommodation, view booking history)
-- **ankithreddypati**: Payment Management (secure payment, receive payment, view payment history)
+
+
 #
-## [Domain Driven Design](https://drive.google.com/file/d/15EXHZMCKZG0UzALjpD7vdAGmpX_sZhNU/view?usp=sharing) 
-![Domain Driven Design](/RestAway.jpg)
+
 
 #
 
